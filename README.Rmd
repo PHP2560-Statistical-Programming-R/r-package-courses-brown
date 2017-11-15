@@ -35,8 +35,8 @@ This project is split up into four sections:
 
 
 # Task Assignment
-  conc.req:  Carolina
-  conc.comparison: All
-  sch.req: Weiqi
-  career.search: Joyce
+  1. conc.req:  Carolina
+  2. conc.comparison: All
+  3. sch.req: Weiqi
+  4. career.search: Joyce
 
