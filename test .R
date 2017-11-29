@@ -1,6 +1,7 @@
+library(rvest)
 
 s <- html_session("https://bulletin.brown.edu/the-college/concentrations/")
-s <- s %>% follow_link("Economics"[2])
+s <- s %>% follow_link("Anthropology")
 
 webpage <- read_html(s)
 
