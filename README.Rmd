@@ -27,8 +27,7 @@ This project is split up into four sections:
     4. We might consider using the package "testthat" to make sure the package works properly. We will also use mock data for testing.
     
 ## Task Assignment
-
-    conc.req: Carolina
-    conc.comparison: All
-    sch.req: Weiqi
+    conc.req: Weiqi and Carolina
+    conc.comparison: Weiqi and Carolina
+    sch.req: Maggie
     career.search: Joyce
