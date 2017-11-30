@@ -22,11 +22,13 @@ conc.list <- data_frame(conc.list)
 # This function takes the concentration of interest as an input and returns a 
 # table with all the required classes for that particular concentration 
 conc.req <- function(concentration_name) {
-  if (grepl(concentration_name, conc.list, ignore.case=TRUE)) {
+  if (grepl(concentration_name, conc.list, ignore.case=TRUE)==TRUE) {
+    for (i in 1:length(conc.list)){
+      conc_of_interest <- conc.list[i]
     # Pull up the website that has a list of all the undergraduate concentrations
     link <- html_session("https://bulletin.brown.edu/the-college/concentrations/")
     # Select the concentration of interest
-    link_conc <- link %>% follow_link(concentration_name)
+    link_conc <- link %>% follow_link(conc_of_interest)
     # Read the content of the link
     content <- read_html(link_conc)
     # Scrape the table
@@ -38,11 +40,11 @@ conc.req <- function(concentration_name) {
     number_classes <- scrape_table$X3
     # Return the table
     return(data_frame(classes, description, number_classes))
-    
-    }else stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')
+    }
+  }else stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')
 }
   
-table_req <- conc.req("Music") 
+table_req <- conc.req("music") 
 
 
 
