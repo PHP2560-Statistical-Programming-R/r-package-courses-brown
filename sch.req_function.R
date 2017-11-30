@@ -9,7 +9,7 @@ sch.req <- function(conc_name, term = c("fall", "spring", "winter")){
   all_courses <- all_courses[, c(1:3, 8)]
   
   # get required courses for concentration
-  required <- conc(conc_name)
+  required <- conc.req(conc_name)
   required <- unlist(str_match_all(required[, 1:2],"[A-Z]{4}[:space:][0-9]{4}[A-Z]*"))
   
   all_courses <- mutate(all_courses, term1 = as.numeric(sapply(all_courses$terms, function(x) x[1])), 
