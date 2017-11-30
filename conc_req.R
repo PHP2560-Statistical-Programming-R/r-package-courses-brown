@@ -10,7 +10,7 @@ conc.req <- function(concentration_name) {
   # Pull up the website that has a list of all the undergraduate concentrations
   link <- html_session("https://bulletin.brown.edu/the-college/concentrations/")
   # Select the concentration of interest
-  link_conc <- link %>% follow_link(concentration_name)
+  link_conc <- link %>% follow_link(concentration_name,2)
   # Read the content of the link
   content <- read_html(link_conc)
   # Scrape the table
@@ -24,4 +24,5 @@ conc.req <- function(concentration_name) {
   return(data_frame(classes, description, number_classes))
 }
 
-table_req <- conc.req("Music")
+table_req <- conc.req("Economics")
+
