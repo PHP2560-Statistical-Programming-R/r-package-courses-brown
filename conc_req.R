@@ -8,8 +8,10 @@ link <- html_session("https://bulletin.brown.edu/the-college/concentrations/")
 conc_list <- link %>% 
   html_nodes("#textcontainer li") %>% # css selector for the entire list of concentration
   html_text() # select only the text 
-
 conc_list <- as.vector(conc_list)
+
+
+
 
 ### conc.re function
 
@@ -44,17 +46,20 @@ conc.req <- function(concentration_name) {
       number_classes <- scrape_table$X3
       test2 <- data_frame(classes, description, number_classes)
     } else {stop('This department does not have a table of requirements')}
-  }
-}
-  
-table_req <- conc.req("africana studies") 
+  } else {stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
+}  
+
+table_req <- conc.req("sociology") 
 
 
 
 
 
 
-###################
+
+
+
+
 ####Test
 link <- html_session("https://bulletin.brown.edu/the-college/concentrations/") 
 conc_list <- link %>% 
@@ -88,8 +93,13 @@ if (any(match) == TRUE) {
     classes <- scrape_table$X1
     description <- scrape_table$X2
     number_classes <- scrape_table$X3
-    test2 <- data_frame(classes, description, number_classes)
-  } else {stop('This department does not have a table of requirements')}
+    # Return the table
+    return(data_frame(classes, description, number_classes))
+    # If the input does not match the name listed in the concentration, stop and show message
+     } else {stop('This department does not have a table of requirements')}
+  } else {stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
+
+
 
 
  
