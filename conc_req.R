@@ -2,6 +2,7 @@ library(rvest)
 library(dplyr)
 library(stringr)
 
+
 # Compile a list of undergraduate concentrations available at Brown from the website, so 
 # that if the concentrations are updated on the website, the list is also updated
 link <- html_session("https://bulletin.brown.edu/the-college/concentrations/") 
@@ -10,9 +11,6 @@ conc_list <- link %>%
   html_text() # select only the text 
 conc_list <- as.vector(conc_list)
 
-
-
-
 ### conc.re function
 
 # This function takes the concentration of interest as an input and returns a 
@@ -20,17 +18,17 @@ conc_list <- as.vector(conc_list)
 # case sensitive. The function will run only if the input matches the concentration name listed 
 # on the website. If the department does not display a table, a message will display this. 
 
-conc.req <- function(concentration_name) {
+conc.req <- function(conc_name) {
   ## Run the function only if the user's input matches the name listed in the concentration 
   ## list, ignoring cases. 
-  match <- grepl(pattern=paste("^", concentration_name,"$", sep=""), conc_list, ignore.case=TRUE)
-  if (any(match==TRUE)) {
-    # Index to find the link of the concentraton of interest (line 32)
-    i <- grep(pattern=paste("^", concentration_name,"$", sep=""), conc_list, ignore.case=TRUE)
+  match <- grepl(pattern=paste("^", conc_name,"$", sep=""), conc_list, ignore.case=TRUE)
+  # Index to find the link of the concentraton of interest
+  i <- grep(pattern=paste("^", conc_name,"$", sep=""), conc_list, ignore.case=TRUE)
+  if (any(match==TRUE) && str_length(conc_name) == str_length(conc_list[i])) {
     # Pull up the website that has a list of all the undergraduate concentrations
     link <- html_session("https://bulletin.brown.edu/the-college/concentrations/")
     # Select the concentration of interest
-    link_conc <- link %>% follow_link(conc_list[i])
+    link_conc <- link %>% follow_link(i+36)
     # Read the content of the link
     content <- read_html(link_conc)
     # Scrape the table
@@ -49,11 +47,7 @@ conc.req <- function(concentration_name) {
   } else {stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  
 
-table_req <- conc.req("sociology") 
-
-
-
-
+table_req <- conc.req("Economics") 
 
 
 
@@ -68,11 +62,20 @@ conc_list <- link %>%
 
 conc_list <- as.vector(conc_list)
 
-concentration_name <- "africana studies"
-match <- grepl(pattern=paste("^", concentration_name,"$", sep=""), conc_list, ignore.case=TRUE)
-if (any(match) == TRUE) {
-  a <- 2+2
+
+
+if (str_length("africana studies") == str_length("africana studies")) {
+  2+2
 }
+
+concentration_name <- "economics"
+match <- grepl(pattern=paste("^", concentration_name,"$", sep=""), conc_list, ignore.case=TRUE)
+# Index to find the link of the concentraton of interest (line 32)
+i <- grep(pattern=paste("^", concentration_name,"$", sep=""), conc_list, ignore.case=TRUE)
+if (any(match == TRUE) & str_length(concentration_name) == str_length(conc_list[29])) {
+  a <- 2+2
+  }else{print("error")}
+
 
   # Index to find the link of the concentraton of interest (line 32)
   i <- grep(pattern=paste("^", concentration_name,"$", sep=""), conc_list, ignore.case=TRUE)
