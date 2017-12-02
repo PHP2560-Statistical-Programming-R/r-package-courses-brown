@@ -15,7 +15,7 @@ conc.req <- function(conc_name){
     html_text()  
   
   # Create a data of the concentration and their corresponding order on the website
-  conc_table <- data.frame (conc_list, seq.int(37, 117, 1))
+  conc_table <- data.frame (conc_list, re_order = seq.int(37, 117, 1))
   # conc_list$re_order <- seq.int(37, 117, 1)
   # Convert the list into a string of characters
   conc_string <- sapply(conc_table$conc.list, as.factor)
