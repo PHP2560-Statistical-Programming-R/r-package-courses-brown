@@ -49,18 +49,22 @@ conc_req <- function(conc_name) {
     # Create a table only if the table exists (i.e. if scrape table ≠ NA)
     if (is.na(scrape_table) == FALSE) {
       # Convert the table into a dataframe  
-      classes <- scrape_table$X1
-      description <- scrape_table$X2
-      number_classes <- scrape_table$X3
-      test2 <- data_frame(classes, description, number_classes)
+      Course <- scrape_table$X1
+      Title <- scrape_table$X2
+      Credit <- scrape_table$X3
+      test2 <- data_frame(Course, Title, Credit)
     } else {stop('This department does not have a table of requirements')}
     
     
   } else {stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  
 
+<<<<<<< HEAD
 table_req <- conc_req("Economics") 
 table_req <- conc_req("Economics") 
+=======
+table_req <- conc.req("Africana Studies") 
+>>>>>>> daf757d308020b39a83553810ebf8f9e27ae0e08
 
 
 

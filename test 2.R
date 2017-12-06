@@ -17,7 +17,7 @@ conc_list <- as.vector(conc_list)
 # case sensitive. The function will run only if the input matches the concentration name listed 
 # on the website. If the department does not display a table, a message will display this. 
 
-conc_comp <- function(conc_name1, conc_name2) {
+conc.req2 <- function(conc_name1, conc_name2) {
   ## Run the function only if the user's input matches the name listed in the concentration 
   ## list, ignoring cases. 
   match1 <- grepl(pattern=paste("^", conc_name1,"$", sep=""), conc_list, ignore.case=TRUE)
@@ -69,7 +69,57 @@ conc_comp <- function(conc_name1, conc_name2) {
   } else {stop('Please enter valid concentration names. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  
 
-table_req <- conc_comp("Chemistry", "Economics") 
+table_req <- conc.req2("Chemistry", "Economics") 
 
 
 
+
+
+
+####Test
+link <- html_session("https://bulletin.brown.edu/the-college/concentrations/") 
+conc_list <- link %>% 
+  html_nodes("#textcontainer li") %>% # css selector for the entire list of concentration
+  html_text() # select only the text 
+
+conc_list <- as.vector(conc_list)
+
+
+
+if (str_length("africana studies") == str_length("africana studies")) {
+  2+2
+}
+
+concentration_name <- "economics"
+match <- grepl(pattern=paste("^", concentration_name,"$", sep=""), conc_list, ignore.case=TRUE)
+# Index to find the link of the concentraton of interest (line 32)
+i <- grep(pattern=paste("^", concentration_name,"$", sep=""), conc_list, ignore.case=TRUE)
+if (any(match == TRUE) & str_length(concentration_name) == str_length(conc_list[29])) {
+  a <- 2+2
+}else{print("error")}
+
+
+# Index to find the link of the concentraton of interest (line 32)
+i <- grep(pattern=paste("^", concentration_name,"$", sep=""), conc_list, ignore.case=TRUE)
+# Pull up the website that has a list of all the undergraduate concentrations
+link <- html_session("https://bulletin.brown.edu/the-college/concentrations/")
+# Select the concentration of interest
+link_conc <- link %>% follow_link(conc_list[i])
+# Read the content of the link
+content <- read_html(link_conc)
+# Scrape the table
+link_table <- html_nodes(content, 'table')
+# If the department doesn't display a table, an error "subscript out of bounds" appears. tryCatch will 
+# ignore this error and allow the function to keep working
+scrape_table <- tryCatch(html_table(link_table)[[1]], error=function(e) print(NA))
+# Create a table only if the table exists (i.e. if scrape table ≠ NA)
+if (is.na(scrape_table) == FALSE) {
+  # Convert the table into a dataframe  
+  classes <- scrape_table$X1
+  description <- scrape_table$X2
+  number_classes <- scrape_table$X3
+  # Return the table
+  return(data_frame(classes, description, number_classes))
+  # If the input does not match the name listed in the concentration, stop and show message
+} else {stop('This department does not have a table of requirements')}
+} else {stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
