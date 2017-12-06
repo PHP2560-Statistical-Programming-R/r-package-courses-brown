@@ -17,15 +17,6 @@
 #' conc_rec("Math")
 #' conc_rec("Africana Studies")
 
-# Compile a list of undergraduate concentrations available at Brown from the website, so 
-# that if the concentrations are updated on the website, the list is also updated
-link <- html_session("https://bulletin.brown.edu/the-college/concentrations/") 
-conc_list <- link %>% 
-  html_nodes("#textcontainer li") %>% # css selector for the entire list of concentration
-  html_text() # select only the text 
-conc_list <- as.vector(conc_list)
-
-### conc.re function
 
 # This function takes the concentration of interest as an input and returns a 
 # table with all the required classes for that particular concentration. The input is not 
@@ -33,6 +24,13 @@ conc_list <- as.vector(conc_list)
 # on the website. If the department does not display a table, a message will display this. 
 
 conc_comp <- function(conc_name1, conc_name2) {
+  # Compile a list of undergraduate concentrations available at Brown from the website, so 
+  # that if the concentrations are updated on the website, the list is also updated
+  link <- html_session("https://bulletin.brown.edu/the-college/concentrations/") 
+  conc_list <- link %>% 
+    html_nodes("#textcontainer li") %>% # css selector for the entire list of concentration
+    html_text() # select only the text 
+  conc_list <- as.vector(conc_list)
   ## Run the function only if the user's input matches the name listed in the concentration 
   ## list, ignoring cases. 
   match1 <- grepl(pattern=paste("^", conc_name1,"$", sep=""), conc_list, ignore.case=TRUE)
