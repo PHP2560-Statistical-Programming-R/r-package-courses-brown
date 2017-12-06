@@ -8,7 +8,9 @@
 #' @return Table of all the required courses for the concentration inputed.
 #' @examples
 #' conc_rec("Economics")
-#' conc_rec("africana studies")
+#' conc_rec("mathematics)
+#' conc_rec("Math")
+#' conc_rec("Africana Studies")
 
 # This function takes the concentration of interest as an input and returns a 
 # table with all the required classes for that particular concentration. The input is not 
@@ -49,77 +51,19 @@ conc_req <- function(conc_name) {
     # Create a table only if the table exists (i.e. if scrape table ≠ NA)
     if (is.na(scrape_table) == FALSE) {
       # Convert the table into a dataframe  
-      Course <- scrape_table$X1
-      Title <- scrape_table$X2
-      Credit <- scrape_table$X3
-      test2 <- data_frame(Course, Title, Credit)
+      classes <- scrape_table$X1
+      description <- scrape_table$X2
+      number_classes <- scrape_table$X3
+      test2 <- data_frame(classes, description, number_classes)
     } else {stop('This department does not have a table of requirements')}
     
     
   } else {stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  
 
-<<<<<<< HEAD
 table_req <- conc_req("Economics") 
-table_req <- conc_req("Economics") 
-=======
-table_req <- conc.req("Africana Studies") 
->>>>>>> daf757d308020b39a83553810ebf8f9e27ae0e08
 
 
 
 
 
-
-####Test
-link <- html_session("https://bulletin.brown.edu/the-college/concentrations/") 
-conc_list <- link %>% 
-  html_nodes("#textcontainer li") %>% # css selector for the entire list of concentration
-  html_text() # select only the text 
-
-conc_list <- as.vector(conc_list)
-
-
-
-if (str_length("africana studies") == str_length("africana studies")) {
-  2+2
-}
-
-concentration_name <- "economics"
-match <- grepl(pattern=paste("^", concentration_name,"$", sep=""), conc_list, ignore.case=TRUE)
-# Index to find the link of the concentraton of interest (line 32)
-i <- grep(pattern=paste("^", concentration_name,"$", sep=""), conc_list, ignore.case=TRUE)
-if (any(match == TRUE) & str_length(concentration_name) == str_length(conc_list[29])) {
-  a <- 2+2
-  }else{print("error")}
-
-
-  # Index to find the link of the concentraton of interest (line 32)
-  i <- grep(pattern=paste("^", concentration_name,"$", sep=""), conc_list, ignore.case=TRUE)
-  # Pull up the website that has a list of all the undergraduate concentrations
-  link <- html_session("https://bulletin.brown.edu/the-college/concentrations/")
-  # Select the concentration of interest
-  link_conc <- link %>% follow_link(conc_list[i])
-  # Read the content of the link
-  content <- read_html(link_conc)
-  # Scrape the table
-  link_table <- html_nodes(content, 'table')
-  # If the department doesn't display a table, an error "subscript out of bounds" appears. tryCatch will 
-  # ignore this error and allow the function to keep working
-  scrape_table <- tryCatch(html_table(link_table)[[1]], error=function(e) print(NA))
-  # Create a table only if the table exists (i.e. if scrape table ≠ NA)
-  if (is.na(scrape_table) == FALSE) {
-    # Convert the table into a dataframe  
-    classes <- scrape_table$X1
-    description <- scrape_table$X2
-    number_classes <- scrape_table$X3
-    # Return the table
-    return(data_frame(classes, description, number_classes))
-    # If the input does not match the name listed in the concentration, stop and show message
-     } else {stop('This department does not have a table of requirements')}
-  } else {stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
-
-
-
-
- 
