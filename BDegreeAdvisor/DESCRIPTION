@@ -1,0 +1,31 @@
+Package: BDegreeAdvisor
+Title: Navigating different concentration requirements, semester schedules, and career opportunities at Brown
+Version: 0.0.0.9000
+Authors@R: as.person(c(
+    "Weiqi Pan <weiqi_pan@brown.edu> [aut, cre]", 
+    "Maggie Matsui <margaret_matsui@brown.edu> [aut, cre]", 
+    "Joyce Elias <joyce_elias@brown.edu> [aut, cre]",
+    "Carolina Velasco <maria_carolina_velasco_molina@brown.edu> [aut, cre]"
+  ))
+
+Description: This package helps Brown students navigate different concentration requirements, semester schedules, and career opportunities by: 
+(1) Compiling concentration requirements and semesters in which these courses are available into an easy-to-read table, 
+(2) Creating a table that compares the courses that are required in two concentrations and the total number of requirements for each one.
+(3) Putting together a schedule of available required courses by comparing the concentration requirements with the courses available in any particular semester.
+(4) Developing a table that includes job opportunities by location, salary, job title and description.
+
+Imports: 
+dplyr,
+rvest,
+stringr,
+...
+
+Suggests: 
+
+
+Depends: R (>= 3.3.2)
+License: None
+Encoding: UTF-8
+LazyData: true
+
+

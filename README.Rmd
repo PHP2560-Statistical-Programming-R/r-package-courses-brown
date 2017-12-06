@@ -10,7 +10,7 @@ Throughout our time at Brown, we have struggled to navigate Brown's online resou
 
 This project is split up into four sections:
 
-    1. Compile concentration requirements and semesters in which these courses are available into an easy-to-read table by webscrapping Brown University concentration websites
+    1. Compile concentration requirements into an easy-to-read table by webscrapping Brown University concentration websites
     2. Create a table that compares the courses that are required in two concentrations and the total number of requirements for each one.
     3. Put together a schedule of available required courses by comparing the concentration requirements with the courses available in any particular semester.
     4. Use a job search website to develop a table that includes job opportunities by location, salary, job title and description, etc.
