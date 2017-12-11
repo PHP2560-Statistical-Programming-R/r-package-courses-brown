@@ -1,9 +1,18 @@
-library(httr)
-library(jsonlite)
-library(dplyr)
-library(stringr)
+#' sch_req Function
+#'
+#' This function takes the concentration of interest and a semester as inputs and returns a 
+#'the required classes for the concentration being offered in the specified semester.
+#' @param conc_name: Concentration name as it appears in the list of Brown concentrations in the 
+#' website: "https://bulletin.brown.edu/the-college/concentrations/". The input is not case 
+#' sensitive. **conc.name is a character string, so it needs to go with "". 
+#' @param term: The semester of interest: one of "fall", "spring", or "winter".
+#' @return Dataframe of the concentration's required course numbers and their titles being offered
+#' in the semester of interest.
+#' @examples
+#' sch_req("Music", "spring")
+#' sch_req("History", "fall")
 
-sch.req <- function(conc_name, term = c("fall", "spring", "winter")){
+sch_req <- function(conc_name, term = c("fall", "spring", "winter")){
 
   # check that conc_name has been entered
   suppressWarnings(
@@ -34,7 +43,7 @@ sch.req <- function(conc_name, term = c("fall", "spring", "winter")){
   all_courses <- all_courses[, c(1:3, 8)]
   
   # get required courses for concentration & check that concentration is valid
-  tryCatch(suppressMessages(required <- conc.req(conc_name)), error=function(e) return(stop("Concentration not found.")))
+  tryCatch(suppressMessages(required <- conc_req(conc_name)), error=function(e) return(stop("Concentration not found.")))
   
   # pull out course codes
   required <- unlist(str_match_all(required[, 1:2],"[A-Z]{3,4}[:space:][0-9]{4}[A-Z]*"))

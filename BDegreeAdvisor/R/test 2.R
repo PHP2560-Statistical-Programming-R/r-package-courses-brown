@@ -1,4 +1,7 @@
 library(rvest)
+library(stringr)
+library(dplyr)
+
 # Compile a list of undergraduate concentrations available at Brown from the website, so 
 # that if the concentrations are updated on the website, the list is also updated
 link <- html_session("https://bulletin.brown.edu/the-college/concentrations/") 
@@ -41,7 +44,6 @@ conc.req2 <- function(conc_name1, conc_name2) {
     
     # If the department doesn't display a table, an error "subscript out of bounds" appears. tryCatch will 
     # ignore this error and allow the function to keep working
-    
     
     scrape_table1 <- tryCatch(html_table(link_table1)[[1]], error=function(e) print(NA))
     scrape_table2 <- tryCatch(html_table(link_table2)[[1]], error=function(e) print(NA))
