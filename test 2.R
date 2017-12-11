@@ -62,6 +62,9 @@ conc.req2 <- function(conc_name1, conc_name2) {
       
     
       total <- rbind(table_req1, table_req2)
+  
+      #apply(total, 2, function(x) gsub("^$|^ $", "-", x))
+      
       
     } else {stop('One of the concentrations does not have a table presented')}
   } else {stop('Please enter valid concentration names. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
