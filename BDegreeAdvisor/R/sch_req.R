@@ -86,5 +86,5 @@ sch_req <- function(conc_name, term = c("fall", "spring", "winter")){
            course_code %in% required$course_code &
            # subset only course code and title
            letter %in% required$letter)[,1:2] %>%
-  return()
+           return()
 }
