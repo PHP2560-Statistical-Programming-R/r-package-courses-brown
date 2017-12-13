@@ -20,6 +20,7 @@ job_finder<-function(query,loc){
   #Load the necessary libraries for this function to run
   library(dplyr)
   library(rvest)
+
 # Check to make sure the user entered the arguements in correctly
   suppressWarnings(
     if(missing(query)){
@@ -33,11 +34,6 @@ job_finder<-function(query,loc){
       stop('Please enter a city,state,or zip code as a string.', call. = FALSE)
     }
   )
-  # This will prompt the user to enter a job title and the location of the job that they want
-  
-  #query<-as.character(readline(prompt = "Enter the job title or keyword : "))
-
-  #loc<-as.character(readline(prompt="Enter a city,state or zip code :"))
   
  
   # This creates an empty dataframe to store our updating results in
@@ -93,7 +89,9 @@ job_finder<-function(query,loc){
       html_attr("href")
       job_link<-paste('[Link](https://www.indeed.com',job_link,sep = '')
       job_link<-paste(job_link, ')', sep='')
-  }
+      
+    
+  
     
     
     
@@ -101,13 +99,14 @@ job_finder<-function(query,loc){
 # Pulling it all together !
      # bind together all the results into one final dataframe
     indeed_job_compiled<- rbind(indeed_job_compiled,data.frame(company_names,job_titles,description,location,job_link))
-    
-    library(knitr)
-  print(kable(indeed_job_compiled,format="html"))
-
   }
- 
+    
+  library(pander)
+  pandoc.table(indeed_job_compiled)
+}
+  
 
+job_finder("data analyst","providence,RI")
 
 
  
