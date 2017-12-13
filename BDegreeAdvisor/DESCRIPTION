@@ -15,6 +15,7 @@ dplyr,
 jsonlite,
 rvest,
 stringr,
+pander
 ...
 
 
