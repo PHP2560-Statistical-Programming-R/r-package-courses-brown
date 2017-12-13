@@ -1,0 +1,96 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+library(dplyr)
+library(rvest)
+library(XML)
+library(httr)
+# Splitting up the URL
+
+job_finder<-function(){
+ # q=substitute(query)
+  #l=substitute(loc)
+  #query<-as.character(q)
+  #loc<-as.character(l)
+  query<-readline(prompt = "Enter the job title,keyword,or company name : ")
+  loc<-readline(prompt="Enter a city,state or zip code :")
+  
+ 
+  
+  indeed_job_compiled<-data.frame("Hiring Company"=character(),
+                                  "Job Title"=character(),
+                                  "Description"=character(),
+                                  "Location"=character(),
+                                  "Job Link"=character())
+                                  
+  library(dplyr)
+  library(rvest)
+  # Splitting the url into parts to view 10 pages of search results. I capped the number of pages for size purposes
+  b= seq(from= 10, to= 100, by=10)
+  urls=vector(length=length(b)+1)
+  
+  for (i in 1:length(b)){
+    url_part1<-"https://www.indeed.com/jobs?q="
+    url_part2<-"&l="
+    url_part3<-"&start="  
+    
+    url<-paste0(url_part1,query,url_part2,loc,url_part3,b[i])  # just remember that you forgot to include the first page of results
+    
+    urls[i+1]<-gsub(pattern=" ",replacement = "+",url) 
+  }
+  first_page<-paste0(url_part1,query,url_part2,loc)
+  urls[1]<-gsub(pattern=" ",replacement = "+",first_page) 
+  
+  for ( j in 1:length(urls)){
+  session1<-html_session(urls[1])
+    
+    job_titles<-session1 %>%
+      # grab the titles of the jobs
+      html_nodes("[data-tn-element=jobTitle]") %>%
+      html_text() 
+    
+    # The name of the Organization that is hiring
+    company_names<-session1 %>%
+      html_nodes(".company") %>%
+      html_text()
+    
+    # Where is the job located ?
+    location<-session1 %>%
+      html_nodes(".location") %>%
+      html_text()
+    # Job Description
+    description <- session1 %>%
+      html_nodes(".summary") %>%
+      html_text()
+    
+    # Give the user a link to the job so that they can apply to it later
+    job_link<- session1%>%
+      html_nodes(css= "[data-tn-element=jobTitle]") %>%
+      html_attr("href")
+    #job_link<-paste(session$url,job_link,sep='')
+    
+    job_link<-paste('[Link](https://www.indeed.com',job_link,sep = '')
+    job_link<-paste(job_link, ')', sep='')
+    
+    
+    
+    
+    
+    # Pulling it all together !
+  
+    indeed_job_compiled<- rbind(indeed_job_compiled,data.frame(company_names,job_titles,description,location,job_link))
+    
+    library(knitr)
+    print(knitr::kable(indeed_job_compiled,format="html",results="asis"))
+    cat("\n")
+    }
+
+}

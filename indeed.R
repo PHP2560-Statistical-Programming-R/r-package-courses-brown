@@ -1,81 +1,113 @@
-# Load packages
-library(dplyr)
-library(rvest)
-library(XML)
-library(httr)
+#' indeed Function
+#'
+#'The purpose of this function is to take the manual work of searching for jobs out of the hand of the user
+#'The user can enter the type of job they want and the location they would like to work and the function will
+#'pull the most important bits of information about the job and will present them in a compact table for the user
+#'to look at all at once.
+#'This function takes two arguements. 
+#'@param query: The jobtitle or keyword that the user wants to search indeed.com for. The input is not case sensitive
+#'**query is a character string and so it needs to be inputted with quotation marks ""
+#'@param loc: The location of jobs the user would like to search for. The input is not case sensitive
+#'**loc is a character string as well and so the input needs to be encased around quotation marks. ""
+#'@return Dataframe that contains the hiring company, the job title, the description, the location, and the job link 
+#'for the search results of that specific query
+#' @examples 
+#' job_finder("data analyst","Providence")
+#' job_finder("merchandise planner","07002")
+
 
 job_finder<-function(query,loc){
+  #Load the necessary libraries for this function to run
+  library(dplyr)
+  library(rvest)
+# Check to make sure the user entered the arguements in correctly
+  suppressWarnings(
+    if(missing(query)){
+      stop('Please enter a job title or keyword as a string.', call. = FALSE)
+    }
+  )
   
-  # the name of the job you want
-  #query="market research analyst"
-  # where you want to work
-  #loc="New Jersey"
-  # we want to search for jobs on indeed.com
-  session<-html_session("https://www.indeed.com")
+  # check that the location variable has been inputted
+  suppressWarnings(
+    if(missing(loc)){
+      stop('Please enter a city,state,or zip code as a string.', call. = FALSE)
+    }
+  )
+  # This will prompt the user to enter a job title and the location of the job that they want
   
-  # we found the location of the form
-  form<-html_form(session)[[1]]
-  # set the values for the form
-  form<-set_values(form,q=query,l=loc)
-  # submit the information so that R can search the website from 
-  session1<-submit_form(session,form)
+  #query<-as.character(readline(prompt = "Enter the job title or keyword : "))
+
+  #loc<-as.character(readline(prompt="Enter a city,state or zip code :"))
   
+ 
+  # This creates an empty dataframe to store our updating results in
+  indeed_job_compiled<-data.frame("Hiring Company"=character(),
+                                  "Job Title"=character(),
+                                  "Description"=character(),
+                                  "Location"=character(),
+                                  "Job Link"=character())
+                                  
   
-  # Getting the name of the job
-  jobtitles<-session1 %>%
-    html_nodes(css=".jobtitle") %>%
-    html_text()
+  # Splitting the url into parts to view 10 pages of search results. I capped the number of pages for size purposes.
+  b= seq(from= 10, to= 100, by=10)
+  urls=vector(length=length(b)+1)
   
-  
-  # Scrape Salary information-  Can't get it to work
-  salary<-session1 %>%
-    html_nodes(css= "#resultsCol li:nth-child(2) a") %>%
-    html_attr("href")
-  salary<-paste(session$url,salary,sep='')
-  
-  salaries<-lapply(salary, . %>%
-                     read_html() %>%
-                     html_nodes(".cmp-sal-salary") %>%
-                     html_text())
-  salary_final<-unlist(salaries)
-  
-  
-  # Now I want to pull the job titles for each search ( alternative way of doing it, both run)
+  for (i in 1:length(b)){
+    url_part1<-"https://www.indeed.com/jobs?q="
+    url_part2<-"&l="
+    url_part3<-"&start="  
+    
+    url<-paste0(url_part1,query,url_part2,loc,url_part3,b[i])  
+    
+    urls[i+1]<-gsub(pattern=" ",replacement = "+",url) 
+  }
+  first_page<-paste0(url_part1,query,url_part2,loc)
+  urls[1]<-gsub(pattern=" ",replacement = "+",first_page) 
+ 
+# Launch an Html session and web scrape information about each job posting 
+  for ( j in 1:length(urls)){
+  session1<-html_session(urls[j])
+    
+  # grab the titles of the jobs
   job_titles<-session1 %>%
-    # grab the titles of the jobs
-    html_nodes("[data-tn-element=jobTitle]") %>%
-    html_text() 
-  
+      html_nodes("[data-tn-element=jobTitle]") %>%
+      html_text() 
+    
   # The name of the Organization that is hiring
-  company_names<-session1 %>%
-    html_nodes(".company") %>%
-    html_text()
-  
+    company_names<-session1 %>%
+      html_nodes(".company") %>%
+      html_text()
+    
   # Where is the job located ?
-  location<-session1 %>%
-    html_nodes(".location") %>%
-    html_text()
+    location<-session1 %>%
+      html_nodes(".location") %>%
+      html_text()
   # Job Description
-  description <- session1 %>%
-    html_nodes(".summary") %>%
-    html_text()
-  
-  # Give the user a link to the job so that they can apply to it later
-  job_link<- session1%>%
-    html_nodes(css= ".jobtitle") %>%
-    html_attr("href")
-  job_link<-paste(session$url,job_link,sep='')
-  
-  #job_link<-paste('[Link](https://www.indeed.com',job_link,sep = '')
-  #job_link<-paste(job_link, ')', sep='')
-  
-  
-  
-  
-  
-  # Pulling it all together !
-  indeed_job_compiled<-data.frame(company_names,jobtitles,description,location,job_link)
-  library(knitr)
+    description <- session1 %>%
+      html_nodes(".summary") %>%
+      html_text()
+    
+    # Give the user a link to the job so that they can apply to it later
+    job_link<- session1%>%
+      html_nodes(css= "[data-tn-element=jobTitle]") %>%
+      html_attr("href")
+      job_link<-paste('[Link](https://www.indeed.com',job_link,sep = '')
+      job_link<-paste(job_link, ')', sep='')
+  }
+    
+    
+    
+   
+# Pulling it all together !
+     # bind together all the results into one final dataframe
+    indeed_job_compiled<- rbind(indeed_job_compiled,data.frame(company_names,job_titles,description,location,job_link))
+    
+    library(knitr)
   print(kable(indeed_job_compiled,format="html"))
-  
-}
+
+  }
+ 
+
+
+
+ 
