@@ -21,6 +21,5 @@ table with all the required classes for that particular concentration.
 \examples{
 conc_rec("Economics")
 conc_rec("mathematics")
-conc_rec("Math")
 conc_rec("Africana Studies")
 }

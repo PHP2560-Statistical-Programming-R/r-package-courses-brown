@@ -9,7 +9,6 @@
 #' @examples
 #' conc_rec("Economics")
 #' conc_rec("mathematics")
-#' conc_rec("Math")
 #' conc_rec("Africana Studies")
 
 

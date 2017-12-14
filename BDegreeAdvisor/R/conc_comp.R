@@ -2,7 +2,7 @@
 #'
 #' This function takes two concentrations of interest as inputs and returns a 
 #' table with all the required classes for both concentrations.
-#' @param conc.name2: a character string for the first concentration name as it appears in the 
+#' @param conc.name1: a character string for the first concentration name as it appears in the 
 #' list of Brown concentrations in the website: 
 #' "https://bulletin.brown.edu/the-college/concentrations/". The input is not case sensitive. 
 #' **conc.name is a character string, so it needs to go with "". 
@@ -12,10 +12,8 @@
 #' **conc.name is a character string, so it needs to go with "". 
 #' @return Table of all the required courses for the concentration inputed.
 #' @examples
-#' conc_rec("Economics")
-#' conc_rec("mathematics")
-#' conc_rec("Math")
-#' conc_rec("Africana Studies")
+#' conc_comp("Economics", "Mathematics")
+#' conc_comp("mathematics", "Africana Studies")
 
 
 conc_comp <- function(conc_name1, conc_name2) {

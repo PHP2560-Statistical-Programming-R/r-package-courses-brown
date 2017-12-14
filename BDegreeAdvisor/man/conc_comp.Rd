@@ -7,7 +7,7 @@
 conc_comp(conc_name1, conc_name2)
 }
 \arguments{
-\item{conc.name2:}{a character string for the first concentration name as it appears in the 
+\item{conc.name1:}{a character string for the first concentration name as it appears in the 
 list of Brown concentrations in the website: 
 "https://bulletin.brown.edu/the-college/concentrations/". The input is not case sensitive. 
 **conc.name is a character string, so it needs to go with "".}
@@ -25,8 +25,6 @@ This function takes two concentrations of interest as inputs and returns a
 table with all the required classes for both concentrations.
 }
 \examples{
-conc_rec("Economics")
-conc_rec("mathematics")
-conc_rec("Math")
-conc_rec("Africana Studies")
+conc_comp("Economics", "Mathematics")
+conc_comp("mathematics", "Africana Studies")
 }
