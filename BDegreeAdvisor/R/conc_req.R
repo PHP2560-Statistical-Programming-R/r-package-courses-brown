@@ -1,4 +1,4 @@
-#' conc_rec Function
+#' conc_req Function
 #'
 #' This function takes the concentration of interest as an input and returns a 
 #' table with all the required classes for that particular concentration.
@@ -7,9 +7,9 @@
 #' sensitive. **conc.name is a character string, so it needs to go with "". 
 #' @return Table of all the required courses for the concentration inputed.
 #' @examples
-#' conc_rec("Economics")
-#' conc_rec("mathematics")
-#' conc_rec("Africana Studies")
+#' conc_req("Economics")
+#' conc_req("mathematics")
+#' conc_req("Africana Studies")
 
 
 

@@ -111,6 +111,4 @@ job_finder<-function(query,loc){
   
 
 
-
-
  
