@@ -106,7 +106,7 @@ job_finder<-function(query,loc){
   }
     
  
-  pandoc.table(indeed_job_compiled)
+  print(pandoc.table(indeed_job_compiled))
 }
   
 
