@@ -64,20 +64,40 @@ conc_comp <- function(conc_name1, conc_name2) {
     # Create a table only if the table exists (i.e. if scrape table ≠ NA)
     if ((is.na(scrape_table1)== FALSE) && ( is.na(scrape_table2) == FALSE)) {
       # Convert the table into a dataframe  
-      Course <- scrape_table1$X1
-      Title <- scrape_table1$X2
-      Credit <- scrape_table1$X3
-      table_req1 <- data_frame(Course, Title, Credit)
       
-      Course <- scrape_table2$X1
-      Title <- scrape_table2$X2
-      Credit <- scrape_table2$X3
-      table_req2 <- data_frame(Course, Title, Credit)
+      classes <- scrape_table1$X1
+      class_name <- scrape_table1$X2
+      number_classes <- scrape_table1$X3
+      
+      table_req1 <- data_frame(classes, class_name, number_classes)
+      table_req1$number_classes[table_req1$number_classes == ""] <- " "
+      
+      space1 <- list("-", "-", "-")
+      space2 <- list("-", "-", "-")
+      name1 <- list("Concentration 1: ", "", "")
+      name2 <- list("Concentration 2: ", "", "")
+      
+      table_req1s <- rbind(name1, table_req1)
+      table_req1s <- rbind(table_req1s, space1)
+      table_req1s <- rbind(table_req1s,space2)
       
       
-    
-      total <- rbind(table_req1, table_req2)
+      classes <- scrape_table2$X1
+      class_name <- scrape_table2$X2
+      number_classes <- scrape_table2$X3
+      table_req2 <- data_frame(classes, class_name, number_classes)
+      table_req2 <- rbind(name2, table_req2)
       
+      total <- rbind(table_req1s, table_req2)
+      
+      
+      total$number_classes[total$number_classes == ""] <- " "
+      
+      table_req_2<-rename(total, "Class Code" = classes, "Class Name" = class_name, "Number of Classes" = number_classes)
+      
+      
+      explain <- list("", "", "If the Class Number cell is empty or has a NA, refer to the category the class belongs to.")
+      rbind(table_req_2, explain)
     } else {stop('One of the concentrations does not have a table presented')}
   } else {stop('Please enter valid concentration names. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  

@@ -16,7 +16,7 @@ ui <- navbarPage("BDegreeAdvisor",
                             sidebarPanel(
                               # Select concentration
                               selectInput("selected_conc", label = h5("Select a concentration"), 
-                                          choices = names(conc_list)), 
+                                          choices = names(conc_list), selected = conc_list[69]), 
                               # Submit button
                               actionButton("submit", label = h5("See table of requirements!"))
                             ),
