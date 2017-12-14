@@ -2,16 +2,15 @@
 #'
 #' This function takes two concentrations of interest as inputs and returns a 
 #' table with all the required classes for both concentrations.
-#' @param conc.name1: a character string for the first concentration name as it appears in the 
+#'conc.name1: a character string for the first concentration name as it appears in the 
 #' list of Brown concentrations in the website: 
 #' "https://bulletin.brown.edu/the-college/concentrations/". The input is not case sensitive. 
 #' **conc.name is a character string, so it needs to go with "". 
-#' @param conc.name2: a character string for the second concentration name as it appears in the 
+#' conc.name2: a character string for the second concentration name as it appears in the 
 #' list of Brown concentrations in the website: 
 #' "https://bulletin.brown.edu/the-college/concentrations/". The input is not case sensitive. 
 #' **conc.name is a character string, so it needs to go with "". 
-#' @return Table of all the required courses for the concentration inputed.
-#' @examples
+#'  Table of all the required courses for the concentration inputed.
 #' conc_comp("Economics", "Mathematics")
 #' conc_comp("mathematics", "Africana Studies")
 
@@ -65,7 +64,6 @@ conc_comp <- function(conc_name1, conc_name2) {
     if ((is.na(scrape_table1[1,1])== FALSE) && (is.na(scrape_table2[1,1]) == FALSE)) {
       # Convert the table into a dataframe  
       
-<<<<<<< HEAD
       classes <- scrape_table1$X1
       class_name <- scrape_table1$X2
       number_classes <- scrape_table1$X3
@@ -99,17 +97,15 @@ conc_comp <- function(conc_name1, conc_name2) {
       
       explain <- list("", "", "If the Class Number cell is empty or has a NA, refer to the category the class belongs to.")
       rbind(table_req_2, explain)
-=======
-      Course <- scrape_table2$X1
-      Title <- scrape_table2$X2
-      Credit <- scrape_table2$X3
-      table_req2 <- data_frame(Course, Title, Credit)
+      #Course <- scrape_table2$X1
+      #Title <- scrape_table2$X2
+      #Credit <- scrape_table2$X3
+     # table_req2 <- data_frame(Course, Title, Credit)
   
-      total <- rbind(table_req1, table_req2)
+      #total <- rbind(table_req1, table_req2)
       return(total)
->>>>>>> c6cdbda180167fc776e9f7bdc2b8921f332d0489
     } else {stop('One of the concentrations does not have a table presented')}
   } else {stop('Please enter valid concentration names. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  
 
-conc_comp("Economics", "Africana Studies")
+a <- conc_comp("Economics", "chemistry")
