@@ -1,24 +1,24 @@
 #' conc_rec Function
 #'
 #' This function takes the concentration of interest as an input and returns a 
-# table with all the required classes for that particular concentration.
+#' table with all the required classes for that particular concentration.
 #' @param conc.name:concentration name as it appears in the list of Brown concentrations in the 
 #' website: "https://bulletin.brown.edu/the-college/concentrations/". The input is not case 
 #' sensitive. **conc.name is a character string, so it needs to go with "". 
 #' @return Table of all the required courses for the concentration inputed.
 #' @examples
 #' conc_rec("Economics")
-#' conc_rec("mathematics)
+#' conc_rec("mathematics")
 #' conc_rec("Math")
 #' conc_rec("Africana Studies")
 
-# This function takes the concentration of interest as an input and returns a 
-# table with all the required classes for that particular concentration. The input is not 
-# case sensitive. The function will run only if the input matches the concentration name listed 
-# on the website. If the department does not display a table, a message will display this. 
+
 
 conc_req <- function(conc_name) {
-  
+  # This function takes the concentration of interest as an input and returns a 
+  # table with all the required classes for that particular concentration. The input is not 
+  # case sensitive. The function will run only if the input matches the concentration name listed 
+  # on the website. If the department does not display a table, a message will display this. 
   
   # Compile a list of undergraduate concentrations available at Brown from the website, so 
   # that if the concentrations are updated on the website, the list is also updated
@@ -60,10 +60,5 @@ conc_req <- function(conc_name) {
     
   } else {stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  
-
-table_req <- conc_req("Economics") 
-
-
-
 
 

@@ -1,7 +1,7 @@
 #' conc_comp Function
 #'
 #' This function takes two concentrations of interest as inputs and returns a 
-#  table with all the required classes for both concentrations.
+#' table with all the required classes for both concentrations.
 #' @param conc.name2: a character string for the first concentration name as it appears in the 
 #' list of Brown concentrations in the website: 
 #' "https://bulletin.brown.edu/the-college/concentrations/". The input is not case sensitive. 
@@ -13,17 +13,19 @@
 #' @return Table of all the required courses for the concentration inputed.
 #' @examples
 #' conc_rec("Economics")
-#' conc_rec("mathematics)
+#' conc_rec("mathematics")
 #' conc_rec("Math")
 #' conc_rec("Africana Studies")
 
 
-# This function takes the concentration of interest as an input and returns a 
-# table with all the required classes for that particular concentration. The input is not 
-# case sensitive. The function will run only if the input matches the concentration name listed 
-# on the website. If the department does not display a table, a message will display this. 
-
 conc_comp <- function(conc_name1, conc_name2) {
+  
+  # This function takes the concentration of interest as an input and returns a 
+  # table with all the required classes for that particular concentration. The input is not 
+  # case sensitive. The function will run only if the input matches the concentration name listed 
+  # on the website. If the department does not display a table, a message will display this. 
+  
+  
   # Compile a list of undergraduate concentrations available at Brown from the website, so 
   # that if the concentrations are updated on the website, the list is also updated
   link <- html_session("https://bulletin.brown.edu/the-college/concentrations/") 
@@ -81,8 +83,5 @@ conc_comp <- function(conc_name1, conc_name2) {
     } else {stop('One of the concentrations does not have a table presented')}
   } else {stop('Please enter valid concentration names. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  
-
-table_req <- conc_comp("Chemistry", "Economics") 
-
 
 
