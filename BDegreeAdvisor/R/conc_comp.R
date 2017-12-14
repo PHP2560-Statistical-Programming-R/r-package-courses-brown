@@ -73,11 +73,9 @@ conc_comp <- function(conc_name1, conc_name2) {
       Title <- scrape_table2$X2
       Credit <- scrape_table2$X3
       table_req2 <- data_frame(Course, Title, Credit)
-      
-      
-    
+  
       total <- rbind(table_req1, table_req2)
-      
+      return(total)
     } else {stop('One of the concentrations does not have a table presented')}
   } else {stop('Please enter valid concentration names. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  

@@ -46,14 +46,14 @@ conc_req <- function(conc_name) {
     # ignore this error and allow the function to keep working
     scrape_table <- tryCatch(html_table(link_table)[[1]], error=function(e) print(NA))
     
-    
     # Create a table only if the table exists (i.e. if scrape table ≠ NA)
     if (is.na(scrape_table) == FALSE) {
       # Convert the table into a dataframe  
       classes <- scrape_table$X1
       description <- scrape_table$X2
       number_classes <- scrape_table$X3
-      test2 <- data_frame(classes, description, number_classes)
+      tab <- data_frame(classes, description, number_classes)
+      return(tab)
     } else {stop('This department does not have a table of requirements')}
     
     
