@@ -52,16 +52,23 @@ conc_req <- function(conc_name) {
     if (is.na(scrape_table) == FALSE) {
       # Convert the table into a dataframe  
       classes <- scrape_table$X1
-      description <- scrape_table$X2
+      class_name <- scrape_table$X2
       number_classes <- scrape_table$X3
-      test2 <- data_frame(classes, description, number_classes)
+      
+      table_req1 <- data_frame(classes, class_name, number_classes)
+      table_req1$number_classes[table_req1$number_classes == ""] <- "-"
+      
+    explain <- list("", "", "If the Class Number cell is empty or has a NA, refer to the category the class belongs to.")
+    table_req2 <- rbind(table_req1, explain)
+    table_req1re<- rename(table_req2, "Class Code" = classes, "Class Name" = class_name, "Number of Classes" = number_classes)
+      
     } else {stop('This department does not have a table of requirements')}
     
     
   } else {stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  
 
-table_req <- conc_req("Economics") 
+table_req <- conc_req("chemistry") 
 
 
 
