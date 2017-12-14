@@ -1,24 +1,23 @@
-#' conc_rec Function
+#' conc_req Function
 #'
 #' This function takes the concentration of interest as an input and returns a 
-# table with all the required classes for that particular concentration.
+#' table with all the required classes for that particular concentration.
 #' @param conc.name:concentration name as it appears in the list of Brown concentrations in the 
 #' website: "https://bulletin.brown.edu/the-college/concentrations/". The input is not case 
 #' sensitive. **conc.name is a character string, so it needs to go with "". 
 #' @return Table of all the required courses for the concentration inputed.
 #' @examples
-#' conc_rec("Economics")
-#' conc_rec("mathematics)
-#' conc_rec("Math")
-#' conc_rec("Africana Studies")
+#' conc_req("Economics")
+#' conc_req("mathematics")
+#' conc_req("Africana Studies")
 
-# This function takes the concentration of interest as an input and returns a 
-# table with all the required classes for that particular concentration. The input is not 
-# case sensitive. The function will run only if the input matches the concentration name listed 
-# on the website. If the department does not display a table, a message will display this. 
+
 
 conc_req <- function(conc_name) {
-  
+  # This function takes the concentration of interest as an input and returns a 
+  # table with all the required classes for that particular concentration. The input is not 
+  # case sensitive. The function will run only if the input matches the concentration name listed 
+  # on the website. If the department does not display a table, a message will display this. 
   
   # Compile a list of undergraduate concentrations available at Brown from the website, so 
   # that if the concentrations are updated on the website, the list is also updated
@@ -45,15 +44,15 @@ conc_req <- function(conc_name) {
     link_table <- html_nodes(content, 'table')
     # If the department doesn't display a table, an error "subscript out of bounds" appears. tryCatch will 
     # ignore this error and allow the function to keep working
-    scrape_table <- tryCatch(html_table(link_table)[[1]], error=function(e) print(NA))
-    
-    
+    scrape_table <- tryCatch(html_table(link_table)[[1]], error=function(e) matrix(nrow=2, ncol=2))
+  
     # Create a table only if the table exists (i.e. if scrape table ≠ NA)
-    if (is.na(scrape_table) == FALSE) {
+    if (is.na(scrape_table[1,1]) == FALSE) {
       # Convert the table into a dataframe  
       classes <- scrape_table$X1
       class_name <- scrape_table$X2
       number_classes <- scrape_table$X3
+<<<<<<< HEAD
       
       table_req1 <- data_frame(classes, class_name, number_classes)
       table_req1$number_classes[table_req1$number_classes == ""] <- "-"
@@ -62,15 +61,23 @@ conc_req <- function(conc_name) {
     table_req2 <- rbind(table_req1, explain)
     table_req1re<- rename(table_req2, "Class Code" = classes, "Class Name" = class_name, "Number of Classes" = number_classes)
       
+=======
+      tab <- data_frame(classes, description, number_classes)
+      return(tab)
+>>>>>>> c6cdbda180167fc776e9f7bdc2b8921f332d0489
     } else {stop('This department does not have a table of requirements')}
     
     
   } else {stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  
 
+<<<<<<< HEAD
 table_req <- conc_req("chemistry") 
 
 
 
 
 
+=======
+conc_req("Economics")
+>>>>>>> c6cdbda180167fc776e9f7bdc2b8921f332d0489

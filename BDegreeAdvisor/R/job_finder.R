@@ -45,7 +45,7 @@ job_finder<-function(query,loc){
                                   
   
 # Splitting the url into parts to view 10 pages of search results. I capped the number of pages for size purposes.
-  b= seq(from= 10, to= 100, by=10)
+  b= seq(from= 10, to= 30, by=10)
   urls=vector(length=length(b)+1)
   
   for (i in 1:length(b)){
@@ -106,11 +106,9 @@ job_finder<-function(query,loc){
   }
     
  
-  pandoc.table(indeed_job_compiled)
+  print(pandoc.table(indeed_job_compiled))
 }
   
-
-
 
 
  
