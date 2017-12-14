@@ -58,11 +58,11 @@ conc_comp <- function(conc_name1, conc_name2) {
     # If the department doesn't display a table, an error "subscript out of bounds" appears. tryCatch will 
     # ignore this error and allow the function to keep working
     
-    scrape_table1 <- tryCatch(html_table(link_table1)[[1]], error=function(e) print(NA))
-    scrape_table2 <- tryCatch(html_table(link_table2)[[1]], error=function(e) print(NA))
+    scrape_table1 <- tryCatch(html_table(link_table1)[[1]], error=function(e)  matrix(nrow=2, ncol=2))
+    scrape_table2 <- tryCatch(html_table(link_table2)[[1]], error=function(e)  matrix(nrow=2, ncol=2))
     
     # Create a table only if the table exists (i.e. if scrape table ≠ NA)
-    if ((is.na(scrape_table1)== FALSE) && ( is.na(scrape_table2) == FALSE)) {
+    if ((is.na(scrape_table1[1,1])== FALSE) && (is.na(scrape_table2[1,1]) == FALSE)) {
       # Convert the table into a dataframe  
       Course <- scrape_table1$X1
       Title <- scrape_table1$X2
@@ -80,4 +80,4 @@ conc_comp <- function(conc_name1, conc_name2) {
   } else {stop('Please enter valid concentration names. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  
 
-
+conc_comp("Economics", "Africana Studies")

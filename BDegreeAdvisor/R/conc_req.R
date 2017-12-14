@@ -44,10 +44,10 @@ conc_req <- function(conc_name) {
     link_table <- html_nodes(content, 'table')
     # If the department doesn't display a table, an error "subscript out of bounds" appears. tryCatch will 
     # ignore this error and allow the function to keep working
-    scrape_table <- tryCatch(html_table(link_table)[[1]], error=function(e) print(NA))
-    
+    scrape_table <- tryCatch(html_table(link_table)[[1]], error=function(e) matrix(nrow=2, ncol=2))
+  
     # Create a table only if the table exists (i.e. if scrape table ≠ NA)
-    if (is.na(scrape_table) == FALSE) {
+    if (is.na(scrape_table[1,1]) == FALSE) {
       # Convert the table into a dataframe  
       classes <- scrape_table$X1
       description <- scrape_table$X2
@@ -60,4 +60,4 @@ conc_req <- function(conc_name) {
   } else {stop('Please enter a valid concentration name. Refer to the list of undergraduate concentrations offered at Brown at https://bulletin.brown.edu/the-college/concentrations/')}
 }  
 
-
+conc_req("Economics")
