@@ -1,2 +1,2 @@
 Packages needed:
-    rvest, stringr,dplyr
+    rvest, stringr,dplyr,pander
