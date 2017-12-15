@@ -26,10 +26,10 @@ conc_comp <- function(conc_name1, conc_name2) {
 
   # Compile a list of undergraduate concentrations available at Brown from the website, so
   # that if the concentrations are updated on the website, the list is also updated
-  link <- html_session("https://bulletin.brown.edu/the-college/concentrations/")
+  link <- rvest::html_session("https://bulletin.brown.edu/the-college/concentrations/")
   conc_list <- link %>%
-    html_nodes("#textcontainer li") %>% # css selector for the entire list of concentration
-    html_text() # select only the text
+    rvest::html_nodes("#textcontainer li") %>% # css selector for the entire list of concentration
+    rvest::html_text() # select only the text
   conc_list <- as.vector(conc_list)
   ## Run the function only if the user's input matches the name listed in the concentration
   ## list, ignoring cases.
@@ -39,27 +39,27 @@ conc_comp <- function(conc_name1, conc_name2) {
   i <- grep(pattern=paste("^", conc_name1,"$", sep=""), conc_list, ignore.case=TRUE)
   b <- grep(pattern=paste("^", conc_name2,"$", sep=""), conc_list, ignore.case=TRUE)
 
-  if (any(match1==TRUE) && str_length(conc_name1) == str_length(conc_list[i]) &&
-      any(match2==TRUE) && str_length(conc_name2) == str_length(conc_list[b])) {
+  if (any(match1==TRUE) && stringr::str_length(conc_name1) == stringr::str_length(conc_list[i]) &&
+      any(match2==TRUE) && stringr::str_length(conc_name2) == stringr::str_length(conc_list[b])) {
     # Pull up the website that has a list of all the undergraduate concentrations
-    link <- html_session("https://bulletin.brown.edu/the-college/concentrations/")
+    link <- rvest::html_session("https://bulletin.brown.edu/the-college/concentrations/")
     # Select the concentration of interest
-    link_conc1 <- link %>% follow_link(i+36)
-    link_conc2 <- link %>% follow_link(b+36)
+    link_conc1 <- link %>% rvest::follow_link(i+36)
+    link_conc2 <- link %>% rvest::follow_link(b+36)
 
     # Read the content of the link
-    content1 <- read_html(link_conc1)
-    content2 <- read_html(link_conc2)
+    content1 <- rvest::read_html(link_conc1)
+    content2 <- rvest::read_html(link_conc2)
 
     # Scrape the table
-    link_table1 <- html_nodes(content1, 'table')
-    link_table2 <- html_nodes(content2, 'table')
+    link_table1 <- rvest::html_nodes(content1, 'table')
+    link_table2 <- rvest::html_nodes(content2, 'table')
 
     # If the department doesn't display a table, an error "subscript out of bounds" appears. tryCatch will
     # ignore this error and allow the function to keep working
 
-    scrape_table1 <- tryCatch(html_table(link_table1)[[1]], error=function(e)  matrix(nrow=2, ncol=2))
-    scrape_table2 <- tryCatch(html_table(link_table2)[[1]], error=function(e)  matrix(nrow=2, ncol=2))
+    scrape_table1 <- tryCatch(rvest::html_table(link_table1)[[1]], error=function(e)  matrix(nrow=2, ncol=2))
+    scrape_table2 <- tryCatch(rvest::html_table(link_table2)[[1]], error=function(e)  matrix(nrow=2, ncol=2))
 
     # Create a table only if the table exists (i.e. if scrape table != NA)
     if ((is.na(scrape_table1[1,1])== FALSE) && (is.na(scrape_table2[1,1]) == FALSE)) {

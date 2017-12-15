@@ -65,32 +65,32 @@ job_finder<-function(query,loc){
 # Launch an Html session and web scrape information about each job posting 
  
    for ( j in 1:length(urls)){
-  session1<-html_session(urls[j])
+  rvest::session1<-html_session(urls[j])
     
 # grab the titles of the jobs
   job_titles<-session1 %>%
-      html_nodes("[data-tn-element=jobTitle]") %>%
-      html_text() 
+      rvest::html_nodes("[data-tn-element=jobTitle]") %>%
+      rvest::html_text() 
     
 # The name of the Organization that is hiring
     company_names<-session1 %>%
-      html_nodes(".company") %>%
-      html_text()
+      rvest::html_nodes(".company") %>%
+      rvest::html_text()
     
 # Where is the job located ?
     location<-session1 %>%
-      html_nodes(".location") %>%
-      html_text()
+      rvest::html_nodes(".location") %>%
+      rvest::html_text()
 
 # Job Description
     description <- session1 %>%
-      html_nodes(".summary") %>%
-      html_text()
+      rvest::html_nodes(".summary") %>%
+      rvest::html_text()
     
 # Give the user a link to the job so that they can apply to it later
     job_link<- session1%>%
-      html_nodes(css= "[data-tn-element=jobTitle]") %>%
-      html_attr("href")
+      rvest::html_nodes(css= "[data-tn-element=jobTitle]") %>%
+      rvest::html_attr("href")
       job_link<-paste('[Link](https://www.indeed.com',job_link,sep = '')
       job_link<-paste(job_link, ')', sep='')
       
@@ -106,7 +106,7 @@ job_finder<-function(query,loc){
   }
     
  
-  print(pandoc.table(indeed_job_compiled))
+  print(pander::pandoc.table(indeed_job_compiled))
 }
   
 
