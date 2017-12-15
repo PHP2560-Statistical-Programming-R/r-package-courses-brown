@@ -75,9 +75,9 @@ sch_req <- function(conc_name, term = c("fall", "spring", "winter")){
   # filter courses by selected semester
   current_term <- dplyr::filter(all_courses, term1 == sem | term2 == sem | term3 == sem)  
   # split course code into subject, course code, and letter and remove any course lists
-  current_term <- dplyr::filter(current_term, !str_detect(current_term$code, 'XLIST'))
-  current_term <- dplyr::mutate(current_term, course_code = str_extract(current_term$code, "[0-9]{4}"))
-  current_term <- dplyr::mutate(current_term, letter = str_extract(current_term$code, "[A-Z]*$"))
+  current_term <- dplyr::filter(current_term, !stringr::str_detect(current_term$code, 'XLIST'))
+  current_term <- dplyr::mutate(current_term, course_code = stringr::str_extract(current_term$code, "[0-9]{4}"))
+  current_term <- dplyr::mutate(current_term, letter = stringr::str_extract(current_term$code, "[A-Z]*$"))
   # change type of course code from chr to num
   current_term$course_code <- as.numeric(current_term$course_code)
   
