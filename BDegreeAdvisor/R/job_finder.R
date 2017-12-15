@@ -65,10 +65,10 @@ job_finder<-function(query,loc){
 # Launch an Html session and web scrape information about each job posting 
  
    for ( j in 1:length(urls)){
-  rvest::session1<-html_session(urls[j])
+  session1 <- rvest::html_session(urls[j])
     
 # grab the titles of the jobs
-  job_titles<-session1 %>%
+  job_titles <- session1 %>%
       rvest::html_nodes("[data-tn-element=jobTitle]") %>%
       rvest::html_text() 
     
