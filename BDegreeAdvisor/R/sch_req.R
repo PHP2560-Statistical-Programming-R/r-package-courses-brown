@@ -46,7 +46,7 @@ sch_req <- function(conc_name, term = c("fall", "spring", "winter")){
   tryCatch(suppressMessages(required <- conc_req(conc_name)), error=function(e) return(stop("Concentration not found.")))
   
   # pull out course codes
-  required <- unlist(stringr:str_match_all(required[, 1:2],"[A-Z]{3,4}[:space:][0-9]{4}[A-Z]*"))
+  required <- unlist(stringr::str_match_all(required[, 1:2],"[A-Z]{3,4}[:space:][0-9]{4}[A-Z]*"))
   required <- as.character(required)
   
   # split up course code into department, course code, and letter
