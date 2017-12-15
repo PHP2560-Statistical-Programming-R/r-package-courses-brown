@@ -19,7 +19,7 @@
 
 job_finder<-function(query,loc){
 
-  
+  `%>%` <- dplyr::`%>%`
 
 # Check to make sure the user entered the query arguement in correctly
   suppressWarnings(

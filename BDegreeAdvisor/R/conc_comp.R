@@ -18,6 +18,8 @@
 
 conc_comp <- function(conc_name1, conc_name2) {
 
+  `%>%` <- dplyr::`%>%`
+  
   # This function takes the concentration of interest as an input and returns a
   # table with all the required classes for that particular concentration. The input is not
   # case sensitive. The function will run only if the input matches the concentration name listed

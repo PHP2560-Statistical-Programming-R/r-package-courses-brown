@@ -13,7 +13,7 @@
 #' sch_req("History", "fall")
 
 sch_req <- function(conc_name, term = c("fall", "spring", "winter")){
-
+  `%>%` <- dplyr::`%>%`
   # check that conc_name has been entered
   suppressWarnings(
     if(missing(conc_name)){
