@@ -50,8 +50,8 @@ conc_comp <- function(conc_name1, conc_name2) {
     link_conc2 <- link %>% rvest::follow_link(b+36)
 
     # Read the content of the link
-    content1 <- rvest::read_html(link_conc1)
-    content2 <- rvest::read_html(link_conc2)
+    content1 <- xml2::read_html(link_conc1)
+    content2 <- xml2::read_html(link_conc2)
 
     # Scrape the table
     link_table1 <- rvest::html_nodes(content1, 'table')

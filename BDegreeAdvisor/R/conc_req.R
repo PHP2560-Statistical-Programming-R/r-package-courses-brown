@@ -42,7 +42,7 @@ conc_req <- function(conc_name) {
     # Select the concentration of interest
     link_conc <- link %>% rvest::follow_link(i+36)
     # Read the content of the link
-    content <- rvest::read_html(link_conc)
+    content <- xml2::read_html(link_conc)
     # Scrape the table
     link_table <- rvest::html_nodes(content, 'table')
     # If the department doesn't display a table, an error "subscript out of bounds" appears. tryCatch will
