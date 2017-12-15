@@ -57,7 +57,7 @@ sch_req <- function(conc_name, term = c("fall", "spring", "winter")){
                          stringsAsFactors = FALSE)
   
   # make columns for up to three possible terms listed that the course runs in 
-  all_courses <- mutate(all_courses, term1 = as.numeric(sapply(all_courses$terms, function(x) x[1])), 
+  all_courses <- dplyr::mutate(all_courses, term1 = as.numeric(sapply(all_courses$terms, function(x) x[1])), 
          term2 = as.numeric(sapply(all_courses$terms, function(x) x[2])), 
          term3 = as.numeric(sapply(all_courses$terms, function(x) x[3])))
   # remove unneeded column
