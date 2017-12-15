@@ -55,7 +55,7 @@ conc_req <- function(conc_name) {
       Class <- scrape_table$X1
       Names <- scrape_table$X2
       Credit <- scrape_table$X3
-      tab <- data_frame(Class, Names, Credit)
+      tab <- dplyr::data_frame(Class, Names, Credit)
       return(tab)
     } else {stop('This department does not have a table of requirements')}
 

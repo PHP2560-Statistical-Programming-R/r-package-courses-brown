@@ -69,12 +69,12 @@ conc_comp <- function(conc_name1, conc_name2) {
       Course <- scrape_table1$X1
       Title <- scrape_table1$X2
       Credit <- scrape_table1$X3
-      table_req1 <- data_frame(Course, Title, Credit)
+      table_req1 <- dplyr::data_frame(Course, Title, Credit)
 
       Course <- scrape_table2$X1
       Title <- scrape_table2$X2
       Credit <- scrape_table2$X3
-      table_req2 <- data_frame(Course, Title, Credit)
+      table_req2 <- dplyr::data_frame(Course, Title, Credit)
 
       total <- rbind(table_req1, table_req2)
       return(total)
